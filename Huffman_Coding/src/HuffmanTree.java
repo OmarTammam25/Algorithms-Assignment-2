@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -30,5 +31,24 @@ public class HuffmanTree {
         // gets the root node of the Huffman tree
         this.root = pq.poll();
         return root;
+    }
+
+    public Map<ByteGroup, String> buildEncoding() {
+        Map<ByteGroup, String> encodingMap = new HashMap<>();
+        buildEncoding(this.root, encodingMap, "");
+        return encodingMap;
+    }
+
+    private void buildEncoding(HuffmanNode current, Map<ByteGroup, String> encodingMap, String encoding) {
+
+        if (current.right != null)
+             buildEncoding(current.right, encodingMap, encoding + '0');
+
+        if (current.left != null)
+            buildEncoding(current.left, encodingMap, encoding + '1');
+
+        if (current.left == null && current.right == null) {
+            encodingMap.put(current.bytes, encoding);
+        }
     }
 }

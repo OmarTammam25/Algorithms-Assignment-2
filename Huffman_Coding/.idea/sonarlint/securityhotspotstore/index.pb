@@ -13,3 +13,5 @@ B
 src/ByteGroup.java,5\9\59e00dec945df8c054d5fe5aeefb691677516125
 D
 src/HuffmanTree.java,7\0\708f98cf8fbeb77f302125012bf645dce7450015
+;
+encoded.txt,8\f\8f2da93b374ed76dedf7f093c9d6ae2dd84ecd88
