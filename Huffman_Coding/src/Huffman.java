@@ -10,6 +10,21 @@ import java.util.PriorityQueue;
 
 public class Huffman {
     public void encode(String path, int bytesPerGroup) {
+
+        byte[] fileBytes = getFileBytes(path);
+
+        // Create a frequency map of the bytes in the file
+        Map<ByteGroup, Integer> frequencyMap = populateFrequencyMap(fileBytes, bytesPerGroup);
+
+        HuffmanTree hTree = new HuffmanTree(frequencyMap);
+        HuffmanNode root = hTree.buildTree();
+
+        System.out.println(root);
+        System.out.println(frequencyMap);
+        System.out.println("I know you want me");
+    }
+
+    private byte[] getFileBytes(String path) {
         byte[] fileBytes;
         try {
             Path p = Paths.get(System.getProperty("user.dir"), path);
@@ -18,35 +33,25 @@ public class Huffman {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+        return fileBytes;
+    }
 
-        // Create a frequency map of the bytes in the file
-        Map<String, Integer> frequencyMap = new HashMap<>();
+    private Map<ByteGroup, Integer> populateFrequencyMap(byte[] fileBytes, int bytesPerGroup) {
+        Map<ByteGroup, Integer> frequencyMap = new HashMap<>();
         for(int i = 0; i < fileBytes.length; i += bytesPerGroup) {
-            String chunk = new String(fileBytes, i, bytesPerGroup);
-            frequencyMap.put(chunk, frequencyMap.getOrDefault(chunk, 0) + 1);
+            ByteGroup currentByteGroup = convertBytesToByteGroup(i, bytesPerGroup, fileBytes);
+            frequencyMap.put(currentByteGroup, frequencyMap.getOrDefault(currentByteGroup, 0) + 1);
         }
+        return frequencyMap;
+    }
 
-        // create a priority queue that sorts frequencies as minimums
-        PriorityQueue<HuffmanNode> pq = new PriorityQueue<>(new NodeComparator());
-        for(Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
-            HuffmanNode node = new HuffmanNode(entry.getValue(), entry.getKey());
-            pq.add(node);
+    private ByteGroup convertBytesToByteGroup(int from, int bytesPerGroup, byte[] fileBytes) {
+        ByteGroup currentByteGroup = new ByteGroup(bytesPerGroup);
+        for (int j = from; j < from + bytesPerGroup; j++) {
+            if (j >= fileBytes.length)
+                break;
+            currentByteGroup.insertByte(fileBytes[j]);
         }
-
-        // Build the Huffman tree
-        while(pq.size() > 1) {
-            HuffmanNode left = pq.poll();
-            HuffmanNode right = pq.poll();
-            HuffmanNode parent = new HuffmanNode(left, right);
-            pq.add(parent);
-        }
-
-        // Get the root node of the Huffman tree
-        HuffmanNode root = pq.poll();
-
-
-        System.out.println(root);
-        System.out.println(frequencyMap);
-        System.out.println("I know you want me");
+        return currentByteGroup;
     }
 }

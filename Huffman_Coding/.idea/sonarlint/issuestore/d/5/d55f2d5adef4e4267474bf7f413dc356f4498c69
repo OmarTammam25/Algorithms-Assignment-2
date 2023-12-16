@@ -1,8 +1,6 @@
 
-g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8±òÛğÆ1
-L	java:S106"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8¾òÛğÆ1
-L	java:S1060"+Replace this use of System.out by a logger.(å¹ä“ıÿÿÿÿ8û…áğÆ1
-G	java:S1061"+Replace this use of System.out by a logger.(šà“Ä8Ì—âğÆ1
-L	java:S1062"+Replace this use of System.out by a logger.(”·Åúÿÿÿÿ8åŒíñÆ1
-O
-java:S1128"-Remove this unused import 'org.w3c.dom.Node'.(ùŠÿËıÿÿÿÿ8œÍğñÆ1
+g	java:S112""FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ê‘ƒ¡Ç1
+L	java:S106"+Replace this use of System.out by a logger.(å¹ä“ıÿÿÿÿ8è‘ƒ¡Ç1
+G	java:S106"+Replace this use of System.out by a logger.(šà“Ä8è‘ƒ¡Ç1
+L	java:S106"+Replace this use of System.out by a logger.(”·Åúÿÿÿÿ8è‘ƒ¡Ç1
+L	java:S106!"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8è‘ƒ¡Ç1
