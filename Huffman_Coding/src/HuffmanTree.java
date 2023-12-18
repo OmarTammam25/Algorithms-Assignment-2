@@ -1,3 +1,5 @@
+import org.w3c.dom.Node;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -5,12 +7,17 @@ import java.util.PriorityQueue;
 public class HuffmanTree {
     private HuffmanNode root;
     private Map<ByteGroup, Integer> frequencyMap;
+    public HuffmanTree() {
+
+    }
     public HuffmanTree(Map<ByteGroup, Integer> frequencyMap) {
         this.frequencyMap = frequencyMap;
     }
     public HuffmanNode getRoot() {
         return root;
     }
+
+    public void setRoot(HuffmanNode root) { this.root = root; }
 
     public HuffmanNode buildTree(){
         // create a priority queue that sorts frequencies as minimums
@@ -33,22 +40,60 @@ public class HuffmanTree {
         return root;
     }
 
-    public Map<ByteGroup, String> buildEncoding() {
+    public Map<ByteGroup, String> buildEncodingMap() {
         Map<ByteGroup, String> encodingMap = new HashMap<>();
-        buildEncoding(this.root, encodingMap, "");
+        buildEncodingMap(this.root, encodingMap, "");
         return encodingMap;
     }
 
-    private void buildEncoding(HuffmanNode current, Map<ByteGroup, String> encodingMap, String encoding) {
+    private void buildEncodingMap(HuffmanNode current, Map<ByteGroup, String> encodingMap, String encoding) {
 
         if (current.right != null)
-             buildEncoding(current.right, encodingMap, encoding + '0');
+             buildEncodingMap(current.right, encodingMap, encoding + '0');
 
         if (current.left != null)
-            buildEncoding(current.left, encodingMap, encoding + '1');
+            buildEncodingMap(current.left, encodingMap, encoding + '1');
 
-        if (current.left == null && current.right == null) {
+        if (current.isLeaf()) {
             encodingMap.put(current.bytes, encoding);
+        }
+    }
+
+    public void buildEncodedTree(BitSetImpl bitSet) {
+        buildEncodedTree(this.root, bitSet);
+    }
+
+    private void buildEncodedTree(HuffmanNode current, BitSetImpl bitSet) {
+        if(current.isLeaf()) {
+            bitSet.insertOne();
+            bitSet.insertByteGroup(current.bytes);
+        } else {
+            bitSet.insertZero();
+
+            if (current.right != null)
+                buildEncodedTree(current.right, bitSet);
+
+            if (current.left != null)
+                buildEncodedTree(current.left, bitSet);
+
+        }
+    }
+
+    public HuffmanNode buildDecodedTree(BitSetImpl bitSet, int bytesPerGroup) {
+        if (bitSet.get(bitSet.currentReadIdx)) {
+            bitSet.currentReadIdx++;
+            ByteGroup bytes = new ByteGroup(bytesPerGroup);
+            for (int i = 0; i < bytesPerGroup; i++) {
+                bytes.insertByte(bitSet.getByte(bitSet.currentReadIdx));
+                bitSet.currentReadIdx += 8;
+            }
+            return new HuffmanNode(0, bytes, null, null);
+        } else {
+            bitSet.currentReadIdx++;
+            HuffmanNode right = buildDecodedTree(bitSet, bytesPerGroup);
+            HuffmanNode left = buildDecodedTree(bitSet, bytesPerGroup);
+
+            return new HuffmanNode(0, null, left, right);
         }
     }
 }

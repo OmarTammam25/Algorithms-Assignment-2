@@ -23,4 +23,8 @@ public class HuffmanNode {
     public String toString() {
         return "bytes: " + bytes + " Frequency: " + frequency;
     }
+
+    public boolean isLeaf() {
+        return left == null && right == null;
+    }
 }
