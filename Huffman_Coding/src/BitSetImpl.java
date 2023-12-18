@@ -1,36 +1,46 @@
-import java.util.BitSet;
-import java.util.Map;
+public class BitSetImpl{
 
-public class BitSetImpl extends BitSet {
-    private int currentIdx;
+    private int currentByteIdx;
+    private int currentBitIdx;
     private byte[] bytes;
-    public int currentReadIdx;
+    public int currentReadByte;
+    public int currentReadBit;
+
     public BitSetImpl() {
-        super();
-        currentIdx = 0;
-        currentReadIdx = 0;
+        currentByteIdx = 0;
+        currentBitIdx = 7;
+        currentReadByte = 0;
+        currentReadBit = 7;
+        bytes = new byte[0];
     }
 
     public BitSetImpl(int size) {
-        super(size);
-        currentIdx = 0;
-        currentReadIdx = 0;
+        currentByteIdx = 0;
+        currentBitIdx = 7;
+        currentReadByte = 0;
+        currentReadBit = 7;
+        bytes = new byte[size];
     }
+
 
     public BitSetImpl(byte[] bytes) {
-        super(bytes.length * 8);
-        currentIdx = 0;
-        currentReadIdx = 0;
-        fromByteArray(bytes);
+        currentReadBit = 0;
+        currentBitIdx = 7;
+        currentReadByte = 0;
+        currentReadBit = 7;
+        this.bytes = bytes;
+    }
+    public int getCurrentByteIdx() {
+        return currentByteIdx;
     }
 
-    public int getCurrentIdx() {
-        return currentIdx;
+    public int getCurrentBitIdx() {
+        return currentBitIdx;
     }
 
     public void insertOne() {
-        super.set(this.currentIdx);
-        this.currentIdx++;
+        setBitInByte(this.currentByteIdx, this.currentBitIdx);
+        incrementWriteBitByOne();
     }
 
     private void setBitInByte(int byteIdx, int bitIdx) {
@@ -38,45 +48,37 @@ public class BitSetImpl extends BitSet {
     }
 
     public void insertZero() {
-        this.currentIdx++;
+        incrementWriteBitByOne();
     }
 
-    public byte[] toByteArray() {
-        byte[] bytes = new byte[this.currentIdx / 8 + (this.currentIdx % 8 == 0 ? 0 : 1)];
-
-        for (int i = 0; i < currentIdx; i++) {
-            if(i < this.length() && this.get(i)) {
-                int currentByte = i/8;
-                int currentBit =  7 - i%8;
-                bytes[currentByte] = (byte) ((1 << currentBit) | bytes[currentByte]);
-            }
-        }
-
-        return bytes;
-    }
-
-    private void fromByteArray(byte[] bytes) {
-        for (int i = 0; i < bytes.length; i++) {
-            this.addByte(bytes[i]);
+    public void incrementWriteBitByOne() {
+        if(this.currentBitIdx == 0) {
+            this.currentBitIdx = 7;
+            this.currentByteIdx++;
+        } else {
+            this.currentBitIdx--;
         }
     }
 
-    public void addIntToBitset(int num) {
-        for (int i = 31; i >= 0; i--) {
-            if ((num & (1 << i)) != 0)
-                this.insertOne();
-            else
-                this.insertZero();
+    public void incrementReadBitByOne() {
+        if(this.currentReadBit == 0) {
+            this.currentReadBit = 7;
+            this.currentReadByte++;
+        } else {
+            this.currentReadBit--;
         }
     }
 
-    public void addByte(Byte b) {
-        for (int i = 7; i >= 0; i--) {
-            if ((b & (1 << i)) != 0)
-                this.insertOne();
-            else
-                this.insertZero();
-        }
+    public byte[] getByteArray() {
+        return this.bytes;
+    }
+
+    public void addIntToBeginning(int num) {
+        this.bytes[0] = (byte)(num >>> 24);
+        this.bytes[1] = (byte)(num >>> 16);
+        this.bytes[2] = (byte)(num >>> 8);
+        this.bytes[3] = (byte)(num);
+        this.currentByteIdx = 4;
     }
 
     public void insertByteGroup(ByteGroup byteGroup) {
@@ -85,9 +87,26 @@ public class BitSetImpl extends BitSet {
         }
     }
 
+    public void addByte(byte b) {
+        if(this.currentBitIdx == 7){
+            this.bytes[this.currentByteIdx] = b;
+            this.currentByteIdx++;
+            return;
+        }
+
+        int shift = 7 - this.currentBitIdx;
+        byte shiftedByte = (byte) (b >>> shift);
+        byte restOfByte = (byte) (b << (this.currentBitIdx + 1));
+        this.bytes[this.currentByteIdx] = (byte) (shiftedByte | this.bytes[this.currentByteIdx]);
+
+        this.currentByteIdx++;
+        this.bytes[this.currentByteIdx] = restOfByte;
+        this.currentBitIdx = 7 - shift;
+    }
+
+
     public HuffmanNode getDecodedTree() {
         int bytesPerGroup = getInt(0);
-        currentReadIdx = 32;
 
         HuffmanTree hTree = new HuffmanTree();
         HuffmanNode root = hTree.buildDecodedTree(this, bytesPerGroup);
@@ -97,24 +116,34 @@ public class BitSetImpl extends BitSet {
     }
 
     public int getInt(int from) {
-        int myInt = 0;
-        int currIt = 31;
-        for (int i = from; i < from + 32; i++) {
-            if (super.get(i))
-                myInt = myInt | (1 << currIt);
-            currIt--;
-        }
-        return myInt;
+        byte a = (byte) (getCurrentReadByte() << 24);
+        byte b = (byte) (getCurrentReadByte() << 16);
+        byte c = (byte) (getCurrentReadByte() << 8);
+        byte d = (getCurrentReadByte());
+        return a | b | c | d;
     }
 
-    public byte getByte(int from) {
-        byte myByte = 0x0;
-        int currIt = 7;
-        for (int i = from; i < from + 8; i++) {
-            if(super.get(i))
-                myByte = (byte) (myByte | (1 << currIt));
-            currIt--;
+
+    public byte getCurrentReadByte() {
+        if(this.currentReadBit == 7){
+            return this.bytes[this.currentReadByte++];
         }
-        return myByte;
+
+        int shift = 7 - this.currentReadBit;
+        byte shiftedByte = (byte) (this.bytes[this.currentReadByte] << shift);
+        this.currentReadByte++;
+
+        byte restOfByte = 0x0;
+        if(this.currentReadByte != this.bytes.length - 1)
+            restOfByte = (byte) ((this.bytes[this.currentReadByte] & 0xFF) >>> (this.currentReadBit + 1));
+
+        return (byte) (shiftedByte | restOfByte);
+    }
+
+
+    public boolean getCurrentReadBit() {
+        boolean curBit = ((this.bytes[this.currentReadByte] >> this.currentReadBit) & 1) == 1;
+        incrementReadBitByOne();
+        return curBit;
     }
 }

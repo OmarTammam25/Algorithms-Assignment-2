@@ -2,8 +2,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +19,14 @@ public class Huffman {
         Map<ByteGroup, String> encodingMap = hTree.buildEncodingMap();
 
         // Encode the file in bitset
-        BitSetImpl bitSet = new BitSetImpl();
+        BitSetImpl bitSet = new BitSetImpl(100);
         prepareHeader(hTree, bytesPerGroup, bitSet);
         prepareFile(fileBytes, encodingMap, bytesPerGroup, bitSet);
 
         // Write the encoded file
         Path p = Paths.get(System.getProperty("user.dir"), path + ".hc");
         try {
-            Files.write(p, bitSet.toByteArray());
+            Files.write(p, bitSet.getByteArray());
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
@@ -36,29 +34,29 @@ public class Huffman {
 
     }
 
-    public void decode(String path) {
+    public void decode(String path, String fileName) {
         byte[] fileBytes = getFileBytes(path);
         BitSetImpl bitSet = new BitSetImpl(fileBytes);
         HuffmanNode root = bitSet.getDecodedTree();
 
-        BitSetImpl decodedFileBits = new BitSetImpl();
+        BitSetImpl decodedFileBits = new BitSetImpl(100);
 
-        int lstBit = 0;
-        for (int it = bitSet.getCurrentIdx()-1; it >= 0; it--) {
-            if(bitSet.get(it)) {
-                lstBit = it;
-                break;
-            }
-        }
+//        int lstBit = 0;
+//        for (int it = bitSet.getCurrentIdx()-1; it >= 0; it--) {
+//            if(bitSet.get(it)) {
+//                lstBit = it;
+//                break;
+//            }
+//        }
 
-        while (bitSet.currentReadIdx < lstBit) {
+        while (decodedFileBits.getCurrentByteIdx() < 100) {
             decodeFile(bitSet, decodedFileBits, root);
         }
 
         // Write the encoded file
-        Path p = Paths.get(System.getProperty("user.dir"), "wdy.seq");
+        Path p = Paths.get(System.getProperty("user.dir"), fileName);
         try {
-            Files.write(p, decodedFileBits.toByteArray());
+            Files.write(p, decodedFileBits.getByteArray());
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
@@ -72,7 +70,7 @@ public class Huffman {
             return;
         }
 
-        if(encodedFileBits.get(encodedFileBits.currentReadIdx++)) {
+        if(encodedFileBits.getCurrentReadBit()) {
             decodeFile(encodedFileBits, decodedFileBits, node.left);
         }else {
             decodeFile(encodedFileBits, decodedFileBits, node.right);
@@ -111,7 +109,7 @@ public class Huffman {
     }
 
     private void prepareHeader(HuffmanTree hTree, int bytesPerGroup, BitSetImpl bitSet) {
-        bitSet.addIntToBitset(bytesPerGroup);
+        bitSet.addIntToBeginning(bytesPerGroup);
         hTree.buildEncodedTree(bitSet);
     }
 
@@ -130,6 +128,6 @@ public class Huffman {
                     bitSet.insertZero();
             }
         }
-        bitSet.insertOne();
+//        bitSet.insertOne();
     }
 }

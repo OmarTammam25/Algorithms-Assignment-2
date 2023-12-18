@@ -1,8 +1,4 @@
 
-T
-java:S1854"7Remove this useless assignment to local variable "end".(Ğí‰Á8²ÌùêÇ1
-[
-java:S1854"9Remove this useless assignment to local variable "begin".(ÿ¨Ÿ‘şÿÿÿÿ8²ÌùêÇ1
 X	java:S125"<This block of commented-out lines of code should be removed.(ô¶À8µÌùêÇ1
-]	java:S125"<This block of commented-out lines of code should be removed.(…ø”ãıÿÿÿÿ8µÌùêÇ1
-G	java:S106"+Replace this use of System.out by a logger.(ÇÜÎö8ºÖéêÇ1
+F	java:S106"+Replace this use of System.out by a logger.(À›¤f8ºÖéêÇ1
+G	java:S106"+Replace this use of System.out by a logger.(ÇÜÎö8‹ÙíëÇ1

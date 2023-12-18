@@ -1,17 +1,15 @@
 
-g	java:S112""FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÔÃèÇ1
-g	java:S112@"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8İœ¤èÇ1
-g	java:S112Y"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÌÔ¤èÇ1
+g	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8×éóÇ1
+g	java:S112>"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8×éóÇ1
+g	java:S112W"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8×éóÇ1
 f
-java:S1192"IDefine a constant instead of duplicating this literal "user.dir" 3 times.(àº²8ÎÔ¤èÇ1
+java:S1192"IDefine a constant instead of duplicating this literal "user.dir" 3 times.(àº²8×éóÇ1
 Z
-java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8‘ÄèÇ1
+java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8•×éóÇ1
 K
-java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8¡ÄèÇ1
-L	java:S106!"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8ÁÄèÇ1
-L	java:S106?"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8 ¤èÇ1
-L	java:S106X"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8•Õ¤èÇ1
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ÛÏÜêÇ1
-O
-java:S1128"-Remove this unused import 'java.util.BitSet'.(‹¸ÚÁıÿÿÿÿ8ÛÏÜêÇ1
+java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8•×éóÇ1
+L	java:S106"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8•×éóÇ1
+X	java:S125,"<This block of commented-out lines of code should be removed.(»©¹8•×éóÇ1
+L	java:S106="+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8Ÿ×éóÇ1
+L	java:S106V"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8Ÿ×éóÇ1
+Y	java:S125ƒ"<This block of commented-out lines of code should be removed.(‚ÉÏ–8©×éóÇ1

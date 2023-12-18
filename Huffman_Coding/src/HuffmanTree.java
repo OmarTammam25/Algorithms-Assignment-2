@@ -80,16 +80,15 @@ public class HuffmanTree {
     }
 
     public HuffmanNode buildDecodedTree(BitSetImpl bitSet, int bytesPerGroup) {
-        if (bitSet.get(bitSet.currentReadIdx)) {
-            bitSet.currentReadIdx++;
+        if (bitSet.getCurrentReadBit()) {
             ByteGroup bytes = new ByteGroup(bytesPerGroup);
+
             for (int i = 0; i < bytesPerGroup; i++) {
-                bytes.insertByte(bitSet.getByte(bitSet.currentReadIdx));
-                bitSet.currentReadIdx += 8;
+                bytes.insertByte(bitSet.getCurrentReadByte());
             }
+
             return new HuffmanNode(0, bytes, null, null);
         } else {
-            bitSet.currentReadIdx++;
             HuffmanNode right = buildDecodedTree(bitSet, bytesPerGroup);
             HuffmanNode left = buildDecodedTree(bitSet, bytesPerGroup);
 
