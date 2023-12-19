@@ -73,16 +73,19 @@ public class BitSetImpl{
         return this.bytes;
     }
 
-    public void addIntToBeginning(int num) {
-        this.bytes[0] = (byte)(num >>> 24);
-        this.bytes[1] = (byte)(num >>> 16);
-        this.bytes[2] = (byte)(num >>> 8);
-        this.bytes[3] = (byte)(num);
-        this.currentByteIdx = 4;
+    public void addInt(int num) {
+        this.bytes[this.currentByteIdx] = (byte)(num >>> 24);
+        this.bytes[this.currentByteIdx + 1] = (byte)(num >>> 16);
+        this.bytes[this.currentByteIdx + 2] = (byte)(num >>> 8);
+        this.bytes[this.currentByteIdx + 3] = (byte)(num);
+        this.currentByteIdx += 4;
     }
+
 
     public void insertByteGroup(ByteGroup byteGroup) {
         for (int i = 0; i < byteGroup.getBytes().length; i++) {
+            if(this.currentByteIdx == this.bytes.length)
+                break;
             this.addByte(byteGroup.getBytes()[i]);
         }
     }
@@ -105,9 +108,7 @@ public class BitSetImpl{
     }
 
 
-    public HuffmanNode getDecodedTree() {
-        int bytesPerGroup = getInt(0);
-
+    public HuffmanNode getDecodedTree(int bytesPerGroup) {
         HuffmanTree hTree = new HuffmanTree();
         HuffmanNode root = hTree.buildDecodedTree(this, bytesPerGroup);
         hTree.setRoot(root);
@@ -115,14 +116,14 @@ public class BitSetImpl{
         return root;
     }
 
-    public int getInt(int from) {
-        byte a = (byte) (getCurrentReadByte() << 24);
-        byte b = (byte) (getCurrentReadByte() << 16);
-        byte c = (byte) (getCurrentReadByte() << 8);
-        byte d = (getCurrentReadByte());
-        return a | b | c | d;
+    public int getInt() {
+        int num = 0;
+        for (int i = 0; i < 4; i++) {
+            num <<= 8;
+            num |= (this.getCurrentReadByte() & 0xFF);
+        }
+        return num;
     }
-
 
     public byte getCurrentReadByte() {
         if(this.currentReadBit == 7){
@@ -139,7 +140,6 @@ public class BitSetImpl{
 
         return (byte) (shiftedByte | restOfByte);
     }
-
 
     public boolean getCurrentReadBit() {
         boolean curBit = ((this.bytes[this.currentReadByte] >> this.currentReadBit) & 1) == 1;
