@@ -29,8 +29,8 @@ public class HuffmanTree {
 
         // Build the Huffman tree
         while(pq.size() > 1) {
-            HuffmanNode left = pq.poll();
             HuffmanNode right = pq.poll();
+            HuffmanNode left = pq.poll();
             HuffmanNode parent = new HuffmanNode(left, right);
             pq.add(parent);
         }

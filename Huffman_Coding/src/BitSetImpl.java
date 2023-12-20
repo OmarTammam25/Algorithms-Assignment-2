@@ -28,8 +28,28 @@ public class BitSetImpl{
         currentBitIdx = 7;
         currentReadByte = 0;
         currentReadBit = 7;
-        this.bytes = bytes;
+
+        int lastByte = bytes.length;
+        for (int i = 0; i < bytes.length; i++) {
+            if(bytes[i] == 0x0){
+                lastByte = i;
+                break;
+            }
+        }
+        this.bytes = new byte[lastByte];
+        System.arraycopy(bytes, 0, this.bytes, 0, lastByte);
     }
+
+    public BitSetImpl(byte[] bytes, int size) {
+        currentReadBit = 0;
+        currentBitIdx = 7;
+        currentReadByte = 0;
+        currentReadBit = 7;
+        this.bytes = new byte[size];
+        System.arraycopy(bytes, 0, this.bytes, 0, size);
+    }
+
+
     public int getCurrentByteIdx() {
         return currentByteIdx;
     }
@@ -81,6 +101,20 @@ public class BitSetImpl{
         this.currentByteIdx += 4;
     }
 
+    public void addLong(long num) {
+        int bigInt = (int) (num >>> 32);
+        int smallInt = (int) num;
+        addInt(bigInt);
+        addInt(smallInt);
+    }
+
+    public void addBitSet(BitSetImpl bitset2) {
+        while( bitset2.currentReadByte < bitset2.currentByteIdx || bitset2.currentReadByte == bitset2.currentByteIdx && bitset2.currentBitIdx != 7){
+            Byte byt = bitset2.getCurrentReadByte();
+            this.addByte(byt);
+        }
+    }
+
 
     public void insertByteGroup(ByteGroup byteGroup) {
         for (int i = 0; i < byteGroup.getBytes().length; i++) {
@@ -98,11 +132,13 @@ public class BitSetImpl{
         }
 
         int shift = 7 - this.currentBitIdx;
-        byte shiftedByte = (byte) (b >>> shift);
+        int bb = b;
+        int a = bb >>> shift;
+        byte shiftedByte = (byte) ((b & 0xFF) >>> shift);
         byte restOfByte = (byte) (b << (this.currentBitIdx + 1));
         this.bytes[this.currentByteIdx] = (byte) (shiftedByte | this.bytes[this.currentByteIdx]);
 
-        this.currentByteIdx++;
+            this.currentByteIdx++;
         this.bytes[this.currentByteIdx] = restOfByte;
         this.currentBitIdx = 7 - shift;
     }
@@ -135,15 +171,39 @@ public class BitSetImpl{
         this.currentReadByte++;
 
         byte restOfByte = 0x0;
-        if(this.currentReadByte != this.bytes.length - 1)
+        if(this.currentReadByte != this.bytes.length)
             restOfByte = (byte) ((this.bytes[this.currentReadByte] & 0xFF) >>> (this.currentReadBit + 1));
 
+        int a = shiftedByte;
+        int b = restOfByte;
+        int c = shiftedByte | restOfByte;
+        int hh = shiftedByte | restOfByte & 0xFF;
+        byte hh2 = (byte) ((shiftedByte & 0xFF) | (restOfByte & 0xFF));
         return (byte) (shiftedByte | restOfByte);
     }
 
     public boolean getCurrentReadBit() {
-        boolean curBit = ((this.bytes[this.currentReadByte] >> this.currentReadBit) & 1) == 1;
+        boolean curBit = (((this.bytes[this.currentReadByte] & 0xFF) >>> this.currentReadBit) & 1) == 1;
         incrementReadBitByOne();
         return curBit;
+    }
+
+    public int getLastBytePosition() {
+        int lstByte = 0;
+        for (int i = this.getByteArray().length - 1; i >= 0; i--) {
+            if (this.getByteArray()[i] != 0) {
+                lstByte = i;
+                break;
+            }
+        }
+        return lstByte;
+    }
+
+    public void reset(){
+        currentByteIdx = 0;
+        currentBitIdx = 7;
+        currentReadByte = 0;
+        currentReadBit = 7;
+        bytes = new byte[bytes.length];
     }
 }

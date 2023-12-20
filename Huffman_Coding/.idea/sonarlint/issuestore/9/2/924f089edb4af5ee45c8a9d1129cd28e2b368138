@@ -1,4 +1,10 @@
 
-X	java:S125"<This block of commented-out lines of code should be removed.(ô¶À8µÌùêÇ1
-F	java:S106"+Replace this use of System.out by a logger.(À›¤f8ºÖéêÇ1
-G	java:S106"+Replace this use of System.out by a logger.(ÇÜÎö8‹ÙíëÇ1
+W
+java:S1854"5Remove this useless assignment to local variable "h".(¤‹–æøÿÿÿÿ8ïŒ‰ÉÈ1
+H
+java:S1481"&Remove this unused "h" local variable.(¤‹–æøÿÿÿÿ8õŒ‰ÉÈ1
+X	java:S125"<This block of commented-out lines of code should be removed.(¸í“8ÄÂ¨ÇÈ1
+F	java:S106"+Replace this use of System.out by a logger.(À›¤f8ÄÂ¨ÇÈ1
+]	java:S125"<This block of commented-out lines of code should be removed.(Ş£ßàúÿÿÿÿ8ÄÂ¨ÇÈ1
+G	java:S106"+Replace this use of System.out by a logger.(ÇÜÎö8ÅÂ¨ÇÈ1
+G	java:S106"+Replace this use of System.out by a logger.(‡¤Ÿ”8¼ù®ÇÈ1

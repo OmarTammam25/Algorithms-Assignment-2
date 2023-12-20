@@ -1,9 +1,31 @@
 
 x
-java:S1104"[Make currentReadByte a static final constant or non-public and provide accessors if needed.(£ÙÔ8–ÄÂóÇ1
+java:S1104"[Make currentReadByte a static final constant or non-public and provide accessors if needed.(£ÙÔ8ùªøœÈ1
 |
-java:S1104"ZMake currentReadBit a static final constant or non-public and provide accessors if needed.(çÏ¢úüÿÿÿÿ8–ÄÂóÇ1
+java:S1104"ZMake currentReadBit a static final constant or non-public and provide accessors if needed.(çÏ¢úüÿÿÿÿ8ùªøœÈ1
 [
-java:S3034/">Prevent "int" promotion by adding "& 0xff" to this expression.(ğÛ™Å8–ÄÂóÇ1
-M
-java:S1172v"+Remove this unused method parameter "from".(Ô»úàüÿÿÿÿ8ªÄÂóÇ1
+java:S3034C">Prevent "int" promotion by adding "& 0xff" to this expression.(ğÛ™Å8ÿªøœÈ1
+X
+java:S1854ˆ"5Remove this useless assignment to local variable "a".(¹¨«ªÿÿÿÿÿ8ÅÆÓÂÈ1
+I
+java:S1481ˆ"&Remove this unused "a" local variable.(¹¨«ªÿÿÿÿÿ8³ÁÂÈ1
+U
+java:S1854µ"7Remove this useless assignment to local variable "hh2".(÷àˆğ8ô²…ÂÈ1
+Y
+java:S1854´"6Remove this useless assignment to local variable "hh".(éôş•ûÿÿÿÿ8İ¹‰ÂÈ1
+S
+java:S1854³"5Remove this useless assignment to local variable "c".(±Ö¡¥8²ÁÂÈ1
+X
+java:S1854²"5Remove this useless assignment to local variable "b".(Ğšÿ¼ûÿÿÿÿ8²ÁÂÈ1
+S
+java:S1854±"5Remove this useless assignment to local variable "a".(ºÔƒÿ8²ÁÂÈ1
+D
+java:S1481±"&Remove this unused "a" local variable.(ºÔƒÿ8ÉÆÓÂÈ1
+I
+java:S1481²"&Remove this unused "b" local variable.(Ğšÿ¼ûÿÿÿÿ8³ÁÂÈ1
+D
+java:S1481³"&Remove this unused "c" local variable.(±Ö¡¥8³ÁÂÈ1
+J
+java:S1481´"'Remove this unused "hh" local variable.(éôş•ûÿÿÿÿ8í¹‰ÂÈ1
+F
+java:S1481µ"(Remove this unused "hh2" local variable.(÷àˆğ8õ²…ÂÈ1
