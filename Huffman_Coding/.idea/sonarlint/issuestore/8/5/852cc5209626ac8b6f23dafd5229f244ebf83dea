@@ -1,7 +1,0 @@
-
-x
-java:S1104"[Make currentReadByte a static final constant or non-public and provide accessors if needed.(£ÙÔ8ùªøœÈ1
-|
-java:S1104"ZMake currentReadBit a static final constant or non-public and provide accessors if needed.(çÏ¢úüÿÿÿÿ8ùªøœÈ1
-[
-java:S30341">Prevent "int" promotion by adding "& 0xff" to this expression.(ğÛ™Å8ÿªøœÈ1

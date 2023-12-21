@@ -1,23 +1,0 @@
-
-g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‹¶ÎœÈ1
-g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‹¶ÎœÈ1
-g	java:S112-"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‹¶ÎœÈ1
-g	java:S112:"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‹¶ÎœÈ1
-g	java:S112O"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‹¶ÎœÈ1
-L	java:S106"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8•¶ÎœÈ1
-L	java:S106"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8•¶ÎœÈ1
-L	java:S106,"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8 ¶ÎœÈ1
-Z
-java:S18547"8Remove this useless assignment to local variable "read".(ü¨ğ¿ıÿÿÿÿ8¢¶ÎœÈ1
-K
-java:S14813")Remove this unused "read" local variable.(Ìí›„øÿÿÿÿ8¡¶ÎœÈ1
-L	java:S1069"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8¡¶ÎœÈ1
-Z
-java:S1854L"8Remove this useless assignment to local variable "read".(ü¨ğ¿ıÿÿÿÿ8ŠÑÛ È1
-K
-java:S1481H")Remove this unused "read" local variable.(Ìí›„øÿÿÿÿ8¢¶ÎœÈ1
-L	java:S106N"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8¢¶ÎœÈ1
-j
-java:S1128"HRemove this unused import 'javax.imageio.event.IIOReadProgressListener'.(ÏÚşÉüÿÿÿÿ8¢¶ÎœÈ1
-I
-java:S1128",Remove this unused import 'java.nio.Buffer'.(î¦Ïî8¢¶ÎœÈ1

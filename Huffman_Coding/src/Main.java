@@ -1,9 +1,19 @@
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Main {
     public static void main(String[] args) {
-        String f = "gbbct10.seq";
+//        String f = "gbbct10.seq";
         Huffman h = new Huffman();
+
+        String inputPath = "C:\\Omar\\Projects\\Algorithms\\Assignmnet 2\\Huffman_Coding\\non_encoded_files\\gbbct10.seq";
+        Path path = Paths.get(inputPath);
+        int n = 1;
+
         long begin = System.currentTimeMillis();
-        h.encode("non_encoded_files/" + f, 5);
+        String encodedFile = h.encode(path, n);
+//        h.encode("non_encoded_files/" + f, 5);
 //        h.encode("non_encoded_files/osos.jpg", 3);
 //        h.encode("non_encoded_files/lec.pdf", 1);
 //        h.encode("non_encoded_files/gbbct10.seq", 1);
@@ -15,7 +25,13 @@ public class Main {
 
 
         begin = System.currentTimeMillis();
-        h.decode("non_encoded_files/" + f + ".hc", "encoded_files/" + f);
+        String inputDecompPath = encodedFile;
+        Path decompPath = Paths.get(inputDecompPath);
+
+//        Path compressedFileName = path.getFileName();
+//        String[] s = compressedFileName.toString().split("\\.");
+        String fileName = "extracted." + path.getFileName();
+        h.decode(decompPath, fileName);
 //        h.decode("non_encoded_files/osos.jpg.hc", "encoded_files/osos.jpg");
 //        h.decode("non_encoded_files/lec.pdf.hc", "encoded_files/lec.pdf");
 //        h.decode("non_encoded_files/gbbct10.seq.hc", "encoded_files/gbbct10.seq");
@@ -30,9 +46,16 @@ public class Main {
 //        boolean f = fileTester.test(System.getProperty("user.dir") + "/non_encoded_files/lec.pdf",
 //                System.getProperty("user.dir") + "/encoded_files/lec.pdf");
 
-        boolean ret = fileTester.test(System.getProperty("user.dir") + "/non_encoded_files/" + f,
-                System.getProperty("user.dir") + "/encoded_files/" + f);
+        double compressionRatio = (double)getFileSize(encodedFile) / h.getFileSize(inputPath);
+        System.out.println("Compression Ratio: " + Double.toString(compressionRatio));
+//        boolean ret = fileTester.test(System.getProperty("user.dir") + "/non_encoded_files/" + f,
+//                System.getProperty("user.dir") + "/encoded_files/" + f);
 
-        System.out.println(ret);
+//        System.out.println(ret);
+    }
+
+    public static long getFileSize(String path) {
+        File file = new File(path);
+        return file.length();
     }
 }

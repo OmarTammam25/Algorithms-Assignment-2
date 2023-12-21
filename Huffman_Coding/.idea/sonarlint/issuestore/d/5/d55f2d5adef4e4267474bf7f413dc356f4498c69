@@ -1,26 +1,25 @@
 
-g	java:S112$"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8ï¬´àÈ1
-g	java:S112_"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8ğ¬´àÈ1
+g	java:S112'"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8´ÃãâÈ1
+g	java:S112b"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ8¶ÃãâÈ1
 Z
-java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8¡®´àÈ1
-W	java:S125
-"<This block of commented-out lines of code should be removed.(Ë«Î8ÑŒÌáÈ1
-]	java:S125"<This block of commented-out lines of code should be removed.(íÙ¯øÿÿÿÿ8ÑŒÌáÈ1
+java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8©ÆãâÈ1
+W	java:S125"<This block of commented-out lines of code should be removed.(Ë«Î8©ÆãâÈ1
+]	java:S125"<This block of commented-out lines of code should be removed.(íÙ¯øÿÿÿÿ8©ÆãâÈ1
 K
-java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8¥®´àÈ1
+java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8©ÆãâÈ1
 T
-java:S1135"2Complete the task associated to this TODO comment.(°õ­ùøÿÿÿÿ8¥®´àÈ1
-]	java:S125"<This block of commented-out lines of code should be removed.(™×Œ­ûÿÿÿÿ8¥®´àÈ1
-L	java:S106#"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8§®´àÈ1
+java:S1135"2Complete the task associated to this TODO comment.(°õ­ùøÿÿÿÿ8©ÆãâÈ1
+]	java:S125"<This block of commented-out lines of code should be removed.(™×Œ­ûÿÿÿÿ8©ÆãâÈ1
+L	java:S106&"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8©ÆãâÈ1
 t
-java:S3776-"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(¾äÒ‡ùÿÿÿÿ8©®´àÈ1
-L	java:S106^"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8¬®´àÈ1
-^	java:S125›"<This block of commented-out lines of code should be removed.(û¤ã¨şÿÿÿÿ8°®´àÈ1
+java:S37760"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(¾äÒ‡ùÿÿÿÿ8²ÆãâÈ1
+L	java:S106a"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8²ÆãâÈ1
+^	java:S125"<This block of commented-out lines of code should be removed.(û¤ã¨şÿÿÿÿ8ºÆãâÈ1
 p
-java:S3776¢"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(õ´´8°®´àÈ1
+java:S3776¥"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(õ´´8ºÆãâÈ1
 `
-java:S1854¤"=Remove this useless assignment to local variable "fileBytes".(¸ËàÃûÿÿÿÿ8±®´àÈ1
+java:S1854§"=Remove this useless assignment to local variable "fileBytes".(¸ËàÃûÿÿÿÿ8ºÆãâÈ1
 Q
-java:S1481¤".Remove this unused "fileBytes" local variable.(¸ËàÃûÿÿÿÿ8±®´àÈ1
+java:S1481§".Remove this unused "fileBytes" local variable.(¸ËàÃûÿÿÿÿ8ºÆãâÈ1
 X
-java:S1144x"<Remove this unused private "convertBytesToByteGroup" method.(©ª€G8²®´àÈ1
+java:S1144{"<Remove this unused private "convertBytesToByteGroup" method.(©ª€G8ºÆãâÈ1

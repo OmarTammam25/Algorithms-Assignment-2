@@ -1,12 +1,14 @@
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Huffman {
-    public void encode(String path, int bytesPerGroup) {
+    public String encode(Path path, int bytesPerGroup) {
 
         // Create a frequency map of the bytes in the file
-        EfficientFileReader fr = new EfficientFileReader(path);
+        EfficientFileReader fr = new EfficientFileReader(path.toString());
 //        long begin = System.currentTimeMillis();
         Map<ByteGroup, Integer> frequencyMap = new HashMap<>();
         populateFrequencyMap(fr, bytesPerGroup, frequencyMap);
@@ -22,11 +24,14 @@ public class Huffman {
 
         // Encode the file in bitset
 //        BitSetImpl bitSet = new BitSetImpl(encodingMap.size() * 2 * bytesPerGroup + 16);
-        EfficientFileWriter outReader = new EfficientFileWriter(path + ".hc");
-        int treeSize = (encodingMap.size()) * 2 * bytesPerGroup;
-        prepareAndWriteHeaders(hTree, bytesPerGroup, getFileSize(path), treeSize, outReader);
+        Path decodedFile = Paths.get(path.getParent().toString(),
+                "20011016." + Integer.toString(bytesPerGroup) + "." + path.getFileName() + ".hc");
+        EfficientFileWriter outReader = new EfficientFileWriter(decodedFile.toString());
 
-        fr = new EfficientFileReader(path);
+        int treeSize = (encodingMap.size()) * 2 * bytesPerGroup;
+        prepareAndWriteHeaders(hTree, bytesPerGroup, getFileSize(path.toString()), treeSize, outReader);
+
+        fr = new EfficientFileReader(path.toString());
         writeDataToFile(encodingMap, bytesPerGroup, fr, outReader);
 
         try{
@@ -35,6 +40,7 @@ public class Huffman {
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
+        return decodedFile.toString();
     }
 
     public long getFileSize(String path) {
@@ -42,8 +48,8 @@ public class Huffman {
         return file.length();
     }
 
-    public void decode(String path, String fileName) {
-        EfficientFileReader fr = new EfficientFileReader(path);
+    public void decode(Path path, String fileName) {
+        EfficientFileReader fr = new EfficientFileReader(path.toString());
 
         int bytesPerGroup = fr.getNextInt();
         long fileSize = fr.getNextLong();
@@ -52,7 +58,8 @@ public class Huffman {
         BitSetImpl bitSet = new BitSetImpl(br.buffer, br.size);
         HuffmanNode root = bitSet.getDecodedTree(bytesPerGroup);
 
-        EfficientFileWriter outputReader = new EfficientFileWriter(fileName);
+        Path decompressedFilePath = Paths.get(path.getParent().toString(), fileName);
+        EfficientFileWriter outputReader = new EfficientFileWriter(decompressedFilePath.toString());
 
         BufferReader data = fr.getNextChunk();
         bitSet = new BitSetImpl(data.buffer, data.size);
