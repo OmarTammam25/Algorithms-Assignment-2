@@ -123,8 +123,6 @@ public class Huffman {
                 }
                 if (bitSet.currentReadByte == bitSet.getByteArray().length) {
                     data = fr.getNextChunk();
-                    if(data.size != 4096)
-                        System.out.println("damn");
                     bitSet = new BitSetImpl(data.buffer, data.size);
                 }
 
@@ -233,23 +231,40 @@ public class Huffman {
         }
     }
 
-//    private byte[] getFileBytes(String path) {
-//        byte[] fileBytes;
-//        try {
-//            Path p = Paths.get(System.getProperty("user.dir"), path);
-//            fileBytes = Files.readAllBytes(p);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//            throw new RuntimeException(e);
-//        }
-//        return fileBytes;
 
     private void populateFrequencyMap(EfficientFileReader fr, int bytesPerGroup, Map<ByteGroup, Integer> frequencyMap) {
         BufferReader data = fr.getNextChunk();
-        while (data.size > 0) {
-            populateFrequencyMap(data.buffer, bytesPerGroup, frequencyMap);
-            data = fr.getNextChunk();
+        BitSetImpl bitSet = new BitSetImpl(data.buffer, data.size);
+        while(data.size > 0) {
+            ByteGroup currentByteGroup = new ByteGroup(bytesPerGroup);
+            while(currentByteGroup.getIt() != bytesPerGroup) {
+                currentByteGroup.insertByte(bitSet.getCurrentReadByte());
+                if(bitSet.currentReadByte == bitSet.getByteArray().length)
+                {
+                    data = fr.getNextChunk();
+                    if(data.size <= 0)
+                        break;
+                    bitSet = new BitSetImpl(data.buffer, data.size);
+                }
+            }
+            frequencyMap.put(currentByteGroup, frequencyMap.getOrDefault(currentByteGroup, 0) + 1);
+
         }
+
+
+//        while (data.size > 0) {
+//            int flag = 0;
+//            for (int i = 0; i < data.size; i += bytesPerGroup) {
+//                ByteGroup currentByteGroup = new ByteGroup(bytesPerGroup);
+//                for (int j = i; j < i + bytesPerGroup; j++) {
+//                    if (j >= data.size){
+//                        break;
+//                    currentByteGroup.insertByte(data.buffer[j]);
+//                }
+//                frequencyMap.put(currentByteGroup, frequencyMap.getOrDefault(currentByteGroup, 0) + 1);
+//            }
+//            data = fr.getNextChunk();
+//        }
     }
 
 
@@ -285,7 +300,7 @@ public class Huffman {
         BufferReader data = inputReader.getNextChunk();
         BitSetImpl bitset = new BitSetImpl(1);
         while(data.size > 0) {
-            prepareFile(data, encodingMap, bytesPerGroup, bitset, outReader);
+            prepareFile(data, encodingMap, bytesPerGroup, bitset, outReader, inputReader);
 //            outReader.writeToFile(bitset);
             data = inputReader.getNextChunk();
         }
@@ -293,13 +308,24 @@ public class Huffman {
             outReader.writeToFile(bitset);
     }
 
-    private void prepareFile(BufferReader br, Map<ByteGroup, String> encodingMap, int bytesPerGroup, BitSetImpl bitSet, EfficientFileWriter outReader) {
+    private void prepareFile(BufferReader br, Map<ByteGroup, String> encodingMap, int bytesPerGroup,
+                             BitSetImpl bitSet, EfficientFileWriter outReader, EfficientFileReader fr) {
         byte[] fileBytes = br.buffer;
+        BitSetImpl input = new BitSetImpl(br.buffer, br.size);
+        while(br.size > 0) {
+            ByteGroup currentByteGroup = new ByteGroup(bytesPerGroup);
+            for (int i = 0; i < bytesPerGroup; i++) {
+                currentByteGroup.insertByte(input.getCurrentReadByte());
+                if(input.currentReadByte == input.getByteArray().length)
+                {
+                    br = fr.getNextChunk();
+                    if(br.size <= 0)
+                        break;
+                    input = new BitSetImpl(br.buffer, br.size);
+                }
+            }
 
-        for (int i = 0; i < br.size; i += bytesPerGroup) {
-            ByteGroup currentByteGroup = convertBytesToByteGroup(i, bytesPerGroup, fileBytes);
             String currentEncoding = encodingMap.get(currentByteGroup);
-
             for (int j = 0; j < currentEncoding.length(); j++) {
                 if (currentEncoding.charAt(j) == '1')
                     bitSet.insertOne();
@@ -311,7 +337,24 @@ public class Huffman {
                     bitSet.reset();
                 }
             }
+
         }
+//        for (int i = 0; i < br.size; i += bytesPerGroup) {
+//            ByteGroup currentByteGroup = convertBytesToByteGroup(i, bytesPerGroup, fileBytes);
+//            String currentEncoding = encodingMap.get(currentByteGroup);
+//
+//            for (int j = 0; j < currentEncoding.length(); j++) {
+//                if (currentEncoding.charAt(j) == '1')
+//                    bitSet.insertOne();
+//                else
+//                    bitSet.insertZero();
+//
+//                if(bitSet.getCurrentBitIdx() == 7){
+//                    outReader.writeToFile(bitSet);
+//                    bitSet.reset();
+//                }
+//            }
+//        }
 //        bitSet.insertOne();
     }
 

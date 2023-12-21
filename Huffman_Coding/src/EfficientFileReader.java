@@ -9,7 +9,7 @@ public class EfficientFileReader {
     BufferedInputStream bufferedStream;
     public EfficientFileReader(String path) {
         this.path = path;
-        this.buffer = new byte[1024 * 4];
+        this.buffer = new byte[2];
 
         try {
             inputStream = new FileInputStream(this.path);

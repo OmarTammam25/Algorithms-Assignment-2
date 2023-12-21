@@ -20,6 +20,10 @@ public class ByteGroup {
         return bytes;
     }
 
+    public int getIt(){
+        return this.it;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

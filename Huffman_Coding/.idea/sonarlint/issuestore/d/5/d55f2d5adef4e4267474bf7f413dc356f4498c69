@@ -1,43 +1,50 @@
 
 p
-java:S1104¿"MMake i a static final constant or non-public and provide accessors if needed.(—ºğøÿÿÿÿ8ƒ“üÈÈ1
+java:S1104ê"MMake i a static final constant or non-public and provide accessors if needed.(—ºğøÿÿÿÿ8€Ø”ŞÈ1
 j
-java:S1104À"MMake j a static final constant or non-public and provide accessors if needed.(áe8’“üÈÈ1
+java:S1104ë"MMake j a static final constant or non-public and provide accessors if needed.(áe8€Ø”ŞÈ1
 x
-java:S1104Á"UMake totalSize a static final constant or non-public and provide accessors if needed.(ÒÒÙúøÿÿÿÿ8¢“üÈÈ1
+java:S1104ì"UMake totalSize a static final constant or non-public and provide accessors if needed.(ÒÒÙúøÿÿÿÿ8€Ø”ŞÈ1
 Z
-java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8â¬ÉÈ1
-]	java:S125"<This block of commented-out lines of code should be removed.(‡‘´üÿÿÿÿ8ŸüÈÈ1
-G	java:S106"+Replace this use of System.out by a logger.(ğÊÄ8¨ŸüÈÈ1
+java:S1854"8Remove this useless assignment to local variable "root".(éÂÎ°ùÿÿÿÿ8¯Ú”ŞÈ1
+]	java:S125"<This block of commented-out lines of code should be removed.(‡‘´üÿÿÿÿ8°Ú”ŞÈ1
+G	java:S106"+Replace this use of System.out by a logger.(ğÊÄ8³Ú”ŞÈ1
 K
-java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8ø¬ÉÈ1
-X	java:S125"<This block of commented-out lines of code should be removed.(‚Ùğ8â½ƒÉÈ1
+java:S1481")Remove this unused "root" local variable.(éÂÎ°ùÿÿÿÿ8³Ú”ŞÈ1
+X	java:S125"<This block of commented-out lines of code should be removed.(‚Ùğ8´Ú”ŞÈ1
 T
-java:S1135!"2Complete the task associated to this TODO comment.(°õ­ùøÿÿÿÿ8´ŸüÈÈ1
-E	java:S108.")Either remove or fill this block of code.(ï­£Ä8¿ŸüÈÈ1
-X	java:S1251"<This block of commented-out lines of code should be removed.(éÿØœ8ÀŸüÈÈ1
-X	java:S1253"<This block of commented-out lines of code should be removed.( çºœ8ÁŸüÈÈ1
+java:S1135!"2Complete the task associated to this TODO comment.(°õ­ùøÿÿÿÿ8´Ú”ŞÈ1
+E	java:S108.")Either remove or fill this block of code.(ï­£Ä8¶Ú”ŞÈ1
+X	java:S1251"<This block of commented-out lines of code should be removed.(éÿØœ8¶Ú”ŞÈ1
+X	java:S1253"<This block of commented-out lines of code should be removed.( çºœ8¶Ú”ŞÈ1
 t
-java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¾äÒ‡ùÿÿÿÿ8ÑŸüÈÈ1
-]	java:S125K"<This block of commented-out lines of code should be removed.(‡‘´üÿÿÿÿ8ÖŸüÈÈ1
-]	java:S125T"<This block of commented-out lines of code should be removed.(Ú¨½»ûÿÿÿÿ8™Å‚ÉÈ1
-]	java:S125j"<This block of commented-out lines of code should be removed.(½Ä†€øÿÿÿÿ8éŸüÈÈ1
-F	java:S106"+Replace this use of System.out by a logger.(ª«§8÷ŸüÈÈ1
-F	java:S108")Either remove or fill this block of code.(ï­£Ä8üŸüÈÈ1
-^	java:S125“"<This block of commented-out lines of code should be removed.(ÖèŸ–ùÿÿÿÿ8ıŸüÈÈ1
-Y	java:S125"<This block of commented-out lines of code should be removed.(º²™Û8şŸüÈÈ1
-^	java:S125­"<This block of commented-out lines of code should be removed.(ŠÎÈÇüÿÿÿÿ8„ üÈÈ1
-Y	java:S125¯"<This block of commented-out lines of code should be removed.(¿É»í8‡ üÈÈ1
-F	java:S108±")Either remove or fill this block of code.(ï­£Ä8Š üÈÈ1
-^	java:S125´"<This block of commented-out lines of code should be removed.(İ¬ò€şÿÿÿÿ8Š üÈÈ1
+java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(¾äÒ‡ùÿÿÿÿ8ºÚ”ŞÈ1
+]	java:S125K"<This block of commented-out lines of code should be removed.(‡‘´üÿÿÿÿ8»Ú”ŞÈ1
+]	java:S125T"<This block of commented-out lines of code should be removed.(Ú¨½»ûÿÿÿÿ8¼Ú”ŞÈ1
+]	java:S125j"<This block of commented-out lines of code should be removed.(½Ä†€øÿÿÿÿ8½Ú”ŞÈ1
+F	java:S108")Either remove or fill this block of code.(ï­£Ä8¾Ú”ŞÈ1
+^	java:S125‘"<This block of commented-out lines of code should be removed.(ÖèŸ–ùÿÿÿÿ8¾Ú”ŞÈ1
+Y	java:S125›"<This block of commented-out lines of code should be removed.(º²™Û8¿Ú”ŞÈ1
+^	java:S125«"<This block of commented-out lines of code should be removed.(ŠÎÈÇüÿÿÿÿ8ÀÚ”ŞÈ1
+Y	java:S125­"<This block of commented-out lines of code should be removed.(¿É»í8ÀÚ”ŞÈ1
+F	java:S108¯")Either remove or fill this block of code.(ï­£Ä8ÀÚ”ŞÈ1
+^	java:S125²"<This block of commented-out lines of code should be removed.(İ¬ò€şÿÿÿÿ8ÀÚ”ŞÈ1
 U
-java:S1854Ø"7Remove this useless assignment to local variable "bit".(—Ú‹‘8‘ üÈÈ1
-^	java:S125É"<This block of commented-out lines of code should be removed.(êòŒıÿÿÿÿ8› üÈÈ1
-^	java:S125Ó"<This block of commented-out lines of code should be removed.(¨ÃËøÿÿÿÿ8 üÈÈ1
+java:S1854Ö"7Remove this useless assignment to local variable "bit".(—Ú‹‘8ÂÚ”ŞÈ1
+^	java:S125Ç"<This block of commented-out lines of code should be removed.(êòŒıÿÿÿÿ8ÄÚ”ŞÈ1
+^	java:S125Ñ"<This block of commented-out lines of code should be removed.(¨ÃËøÿÿÿÿ8ÄÚ”ŞÈ1
 F
-java:S1481Ø"(Remove this unused "bit" local variable.(—Ú‹‘8¢ üÈÈ1
-Y	java:S125ì"<This block of commented-out lines of code should be removed.(¶ƒÒ8« üÈÈ1
-^	java:S125"<This block of commented-out lines of code should be removed.(¥â•‡şÿÿÿÿ8² üÈÈ1
-Y	java:S125†"<This block of commented-out lines of code should be removed.(…çÂá8· üÈÈ1
-^	java:S125¡"<This block of commented-out lines of code should be removed.(û¤ã¨şÿÿÿÿ8Ë üÈÈ1
-Y	java:S125»"<This block of commented-out lines of code should be removed.(‚ÉÏ–8ß üÈÈ1
+java:S1481Ö"(Remove this unused "bit" local variable.(—Ú‹‘8ÄÚ”ŞÈ1
+^	java:S125ÿ"<This block of commented-out lines of code should be removed.(ÖèŸ–ùÿÿÿÿ8ÈÚ”ŞÈ1
+^	java:S125"<This block of commented-out lines of code should be removed.(¥â•‡şÿÿÿÿ8ÈÚ”ŞÈ1
+Y	java:S125•"<This block of commented-out lines of code should be removed.(…çÂá8ÉÚ”ŞÈ1
+^	java:S125°"<This block of commented-out lines of code should be removed.(û¤ã¨şÿÿÿÿ8ËÚ”ŞÈ1
+p
+java:S3776·"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(õ´´8ÌÚ”ŞÈ1
+`
+java:S1854¹"=Remove this useless assignment to local variable "fileBytes".(¸ËàÃûÿÿÿÿ8ŠŒ•ŞÈ1
+Q
+java:S1481¹".Remove this unused "fileBytes" local variable.(¸ËàÃûÿÿÿÿ8ŠŒ•ŞÈ1
+Y	java:S125Ö"<This block of commented-out lines of code should be removed.(š€¹8Œ•ŞÈ1
+W
+java:S1144"9Remove this unused private "populateFrequencyMap" method.(ŠÓ‘©8ĞÚ”ŞÈ1
