@@ -4,64 +4,37 @@ import java.util.Map;
 
 public class Huffman {
     public void encode(String path, int bytesPerGroup) {
-//        byte[] fileBytes = getFileBytes(path);
 
         // Create a frequency map of the bytes in the file
-
         EfficientFileReader fr = new EfficientFileReader(path);
-        long begin = System.currentTimeMillis();
+//        long begin = System.currentTimeMillis();
         Map<ByteGroup, Integer> frequencyMap = new HashMap<>();
         populateFrequencyMap(fr, bytesPerGroup, frequencyMap);
-        long end = System.currentTimeMillis();
-        System.out.println("File read in " + (end - begin) + " ms");
+//        long end = System.currentTimeMillis();
+//        System.out.println("File read in " + (end - begin) + " ms");
 
         // Prepare huffman data
         HuffmanTree hTree = new HuffmanTree(frequencyMap);
         HuffmanNode root = hTree.buildTree();
-//        System.out.println("encoding tree: ");
-//        try {
-//            FileOutputStream w = new FileOutputStream("encodingtree.txt");
-//            dfs(root, w);
-//        } catch (IOException e){
-//
-//        }
-//        try{
-//            w.writer.close();
-//        } catch(IOException e) {
-//
-//        }
+
         // TODO change this to bitset or smth not a string
         Map<ByteGroup, String> encodingMap = hTree.buildEncodingMap();
 
         // Encode the file in bitset
-        BitSetImpl bitSet = new BitSetImpl(encodingMap.size() * 2 * bytesPerGroup + 16);
-        prepareHeader(hTree, bytesPerGroup, getFileSize(path), bitSet);
+//        BitSetImpl bitSet = new BitSetImpl(encodingMap.size() * 2 * bytesPerGroup + 16);
         EfficientFileWriter outReader = new EfficientFileWriter(path + ".hc");
-        outReader.writeToFile(bitSet);
+        int treeSize = (encodingMap.size()) * 2 * bytesPerGroup;
+        prepareAndWriteHeaders(hTree, bytesPerGroup, getFileSize(path), treeSize, outReader);
 
         fr = new EfficientFileReader(path);
         writeDataToFile(encodingMap, bytesPerGroup, fr, outReader);
+
         try{
             outReader.writer.close();
         } catch (IOException e){
-
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
-//        prepareFile(fileBytes, encodingMap, bytesPerGroup, bitSet);
-
-//        int lstByte = getLastBytePosition(bitSet);
-//        byte[] scaledBytes = new byte[lstByte + 1];
-//        System.arraycopy(bitSet.getByteArray(), 0, scaledBytes, 0, lstByte + 1);
-//        bitSet = new BitSetImpl(scaledBytes);
-//
-//        // Write the encoded file
-//        Path p = Paths.get(System.getProperty("user.dir"), path + ".hc");
-//        try {
-//            Files.write(p, bitSet.getByteArray());
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//            throw new RuntimeException(e);
-//        }
-
     }
 
     public long getFileSize(String path) {
@@ -72,8 +45,6 @@ public class Huffman {
     public void decode(String path, String fileName) {
         EfficientFileReader fr = new EfficientFileReader(path);
 
-//        byte[] fileBytes = getFileBytes(path);
-//        BitSetImpl bitSet = new BitSetImpl(fileBytes);
         int bytesPerGroup = fr.getNextInt();
         long fileSize = fr.getNextLong();
         int treeSize = fr.getNextInt();
@@ -81,43 +52,25 @@ public class Huffman {
         BitSetImpl bitSet = new BitSetImpl(br.buffer, br.size);
         HuffmanNode root = bitSet.getDecodedTree(bytesPerGroup);
 
-//        System.out.println("decoded tree: ");
-//        try {
-//            FileOutputStream w = new FileOutputStream("decodedTree.txt");
-//            dfs(root, w);
-//        } catch (IOException e){
-//
-//        }
-//        try{
-//            w.writer.flush();
-//            w.writer.close();
-//        } catch(IOException e) {
-//
-//        }
-
         EfficientFileWriter outputReader = new EfficientFileWriter(fileName);
 
         BufferReader data = fr.getNextChunk();
         bitSet = new BitSetImpl(data.buffer, data.size);
-        int i = 0;
-        int j = 7;
-        Iterators it = new Iterators(i, j);
-        while (it.totalSize < fileSize) {
-//            decodeFile(data, fileSize, it, outputReader, fr, root);
-//            System.out.println("alo");
+        long totalSize = 0;
+        while (totalSize < fileSize) {
 
             HuffmanNode currentNode = root;
             while(true) {
                 if(currentNode.isLeaf()){
-                    if(it.totalSize + currentNode.bytes.getBytes().length > fileSize)
+                    if(totalSize + currentNode.bytes.getBytes().length > fileSize)
                     {
-                        byte[] temp = new byte[(int) (fileSize - it.totalSize)];
+                        byte[] temp = new byte[(int) (fileSize - totalSize)];
                         System.arraycopy(currentNode.bytes.getBytes(), 0, temp, 0, temp.length);
                         outputReader.writeToFile(temp);
-                        it.totalSize = fileSize;
+                        totalSize = fileSize;
                     } else {
                         outputReader.writeToFile(currentNode.bytes.getBytes());
-                        it.totalSize += currentNode.bytes.getBytes().length;
+                        totalSize += currentNode.bytes.getBytes().length;
                     }
                     break;
                 }
@@ -132,105 +85,16 @@ public class Huffman {
                     currentNode = currentNode.right;
                 }
             }
-
-
         }
 
 
         try {
             outputReader.writer.close();
         } catch (IOException e) {
-
-        }
-//        while(data.size > 0){
-////            BitSetImpl curr = new BitSetImpl(data.buffer, data.size);
-////
-////            BitSetImpl decodedFileBits = new BitSetImpl(data.size * 8);
-////            for (int i = 0; i < data.size; i++) {
-////                outputReader.writeToFile(decodedFileBits);
-////            }
-//            data = fr.getNextChunk();
-//        }
-
-//        while (decodedFileBits.getCurrentByteIdx() < fileSize) {
-//            decodeFile(bitSet, decodedFileBits, root);
-//        }
-//
-//        // Write the encoded file
-//        Path p = Paths.get(System.getProperty("user.dir"), fileName);
-//        try {
-//            Files.write(p, decodedFileBits.getByteArray());
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//            throw new RuntimeException(e);
-//        }
-    }
-
-    private void dfs(HuffmanNode u, FileOutputStream w) {
-        if(u.isLeaf()){
-//            w.writeToFile(u.bytes.toString());
-            try {
-//                FileOutputStream os = new FileOutputStream(w.path);
-                w.write(u.bytes.toString().getBytes());
-            } catch (IOException e) {
-
-            }
-//            System.out.println(u.bytes);
-            return;
-        }
-        if(u.right != null)
-            dfs(u.right, w);
-        if(u.left != null)
-            dfs(u.left, w);
-    }
-
-    public void decodeFile(BufferReader buffer, long fileSize, Iterators it, EfficientFileWriter outputReader, EfficientFileReader fr, HuffmanNode node) {
-        if(node.isLeaf()) {
-            if(it.totalSize + node.bytes.getBytes().length > fileSize)
-            {
-                byte[] temp = new byte[(int) (fileSize - it.totalSize)];
-                System.arraycopy(node.bytes.getBytes(), 0, temp, 0, temp.length);
-                outputReader.writeToFile(temp);
-                it.totalSize = fileSize;
-            } else {
-                outputReader.writeToFile(node.bytes);
-                it.totalSize += node.bytes.getBytes().length;
-            }
-//            decodedFileBits.insertByteGroup(node.bytes);
-//            decodeFile(buffer, it, outputReader, fr, node);
-            return;
-        }
-
-        if(it.i >= buffer.buffer.length) {
-            buffer = fr.getNextChunk();
-            if(buffer.size <= 0) {
-                return;
-            }
-//            buffer = br.buffer;
-            it.i = 0;
-            it.j = 7;
-        }
-
-        int bit = (((buffer.buffer[it.i] & 0xFF) >>> it.j) & 1);
-        if((((buffer.buffer[it.i] & 0xFF) >>> it.j) & 0xFF & 1) == 1) {
-            if(it.j == 0){
-                it.i++;
-                it.j = 7;
-            }else{
-                it.j--;
-            }
-            decodeFile(buffer, fileSize, it, outputReader, fr, node.left);
-        }else {
-            if(it.j == 0){
-                it.i++;
-                it.j = 7;
-            }else{
-                it.j--;
-            }
-            decodeFile(buffer, fileSize, it, outputReader, fr, node.right);
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
     }
-
 
     private void populateFrequencyMap(EfficientFileReader fr, int bytesPerGroup, Map<ByteGroup, Integer> frequencyMap) {
         BufferReader data = fr.getNextChunk();
@@ -251,30 +115,6 @@ public class Huffman {
 
         }
 
-
-//        while (data.size > 0) {
-//            int flag = 0;
-//            for (int i = 0; i < data.size; i += bytesPerGroup) {
-//                ByteGroup currentByteGroup = new ByteGroup(bytesPerGroup);
-//                for (int j = i; j < i + bytesPerGroup; j++) {
-//                    if (j >= data.size){
-//                        break;
-//                    currentByteGroup.insertByte(data.buffer[j]);
-//                }
-//                frequencyMap.put(currentByteGroup, frequencyMap.getOrDefault(currentByteGroup, 0) + 1);
-//            }
-//            data = fr.getNextChunk();
-//        }
-    }
-
-
-    private void populateFrequencyMap(byte[] fileBytes, int bytesPerGroup, Map<ByteGroup, Integer> frequencyMap) {
-//        Map<ByteGroup, Integer> frequencyMap = new HashMap<>();
-        for(int i = 0; i < fileBytes.length; i += bytesPerGroup) {
-            ByteGroup currentByteGroup = convertBytesToByteGroup(i, bytesPerGroup, fileBytes);
-            frequencyMap.put(currentByteGroup, frequencyMap.getOrDefault(currentByteGroup, 0) + 1);
-        }
-//        return frequencyMap;
     }
 
     private ByteGroup convertBytesToByteGroup(int from, int bytesPerGroup, byte[] fileBytes) {
@@ -287,13 +127,24 @@ public class Huffman {
         return currentByteGroup;
     }
 
-    private void prepareHeader(HuffmanTree hTree, int bytesPerGroup, long fileSize, BitSetImpl bitSet) {
+    private void prepareAndWriteHeaders(HuffmanTree hTree, int bytesPerGroup, long fileSize, int treeSize, EfficientFileWriter fw) {
+        BitSetImpl bitSet = new BitSetImpl(4);
         bitSet.addInt(bytesPerGroup);
+        fw.writeToFile(bitSet);
+
+        bitSet = new BitSetImpl(8);
         bitSet.addLong(fileSize);
-        BitSetImpl bitset2 = new BitSetImpl(bitSet.getByteArray().length);
+        fw.writeToFile(bitSet);
+
+
+        BitSetImpl bitset2 = new BitSetImpl(treeSize);
         hTree.buildEncodedTree(bitset2);
+
+        bitSet = new BitSetImpl(4);
         bitSet.addInt(bitset2.getCurrentByteIdx() + (bitset2.getCurrentBitIdx() != 7 ? 1 : 0));
-        bitSet.addBitSet(bitset2);
+        fw.writeToFile(bitSet);
+
+        fw.writeToFile(bitset2);
     }
 
     private void writeDataToFile(Map<ByteGroup, String> encodingMap, int bytesPerGroup, EfficientFileReader inputReader, EfficientFileWriter outReader) {
@@ -338,34 +189,6 @@ public class Huffman {
                 }
             }
 
-        }
-//        for (int i = 0; i < br.size; i += bytesPerGroup) {
-//            ByteGroup currentByteGroup = convertBytesToByteGroup(i, bytesPerGroup, fileBytes);
-//            String currentEncoding = encodingMap.get(currentByteGroup);
-//
-//            for (int j = 0; j < currentEncoding.length(); j++) {
-//                if (currentEncoding.charAt(j) == '1')
-//                    bitSet.insertOne();
-//                else
-//                    bitSet.insertZero();
-//
-//                if(bitSet.getCurrentBitIdx() == 7){
-//                    outReader.writeToFile(bitSet);
-//                    bitSet.reset();
-//                }
-//            }
-//        }
-//        bitSet.insertOne();
-    }
-
-    class Iterators {
-        public int i;
-        public int j;
-        public long totalSize;
-        Iterators(int i, int j){
-            this.i = i;
-            this.j = j;
-            totalSize = 0;
         }
     }
 

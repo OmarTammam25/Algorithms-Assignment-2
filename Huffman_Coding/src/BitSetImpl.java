@@ -22,24 +22,6 @@ public class BitSetImpl{
         bytes = new byte[size];
     }
 
-
-    public BitSetImpl(byte[] bytes) {
-        currentReadBit = 0;
-        currentBitIdx = 7;
-        currentReadByte = 0;
-        currentReadBit = 7;
-
-        int lastByte = bytes.length;
-        for (int i = 0; i < bytes.length; i++) {
-            if(bytes[i] == 0x0){
-                lastByte = i;
-                break;
-            }
-        }
-        this.bytes = new byte[lastByte];
-        System.arraycopy(bytes, 0, this.bytes, 0, lastByte);
-    }
-
     public BitSetImpl(byte[] bytes, int size) {
         currentReadBit = 0;
         currentBitIdx = 7;
@@ -132,8 +114,6 @@ public class BitSetImpl{
         }
 
         int shift = 7 - this.currentBitIdx;
-        int bb = b;
-        int a = bb >>> shift;
         byte shiftedByte = (byte) ((b & 0xFF) >>> shift);
         byte restOfByte = (byte) (b << (this.currentBitIdx + 1));
         this.bytes[this.currentByteIdx] = (byte) (shiftedByte | this.bytes[this.currentByteIdx]);
@@ -174,11 +154,6 @@ public class BitSetImpl{
         if(this.currentReadByte != this.bytes.length)
             restOfByte = (byte) ((this.bytes[this.currentReadByte] & 0xFF) >>> (this.currentReadBit + 1));
 
-        int a = shiftedByte;
-        int b = restOfByte;
-        int c = shiftedByte | restOfByte;
-        int hh = shiftedByte | restOfByte & 0xFF;
-        byte hh2 = (byte) ((shiftedByte & 0xFF) | (restOfByte & 0xFF));
         return (byte) (shiftedByte | restOfByte);
     }
 
